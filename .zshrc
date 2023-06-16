@@ -35,11 +35,11 @@ export DOTBARE_BACKUP="/home/hdd/dots-backup"
 # uses neovim nightly 9+
 alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
 alias nvim-kick="NVIM_APPNAME=MyNvim nvim"
-alias nvim-chad="NVIM_APPNAME=nvim-ditsuke nvim"
-alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
+# alias nvim-chad="NVIM_APPNAME=nvim-ditsuke nvim"
+# alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
 
 function nvims() {
-  items=("default" "MyNvim" "LazyVim" "nvim-ditsuke" "AstroNvim")
+  items=("default" "MyNvim" "LazyVim" "nvim-ide" "AstroNvim")
   config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
   if [[ -z $config ]]; then
     echo "Nothing selected"
