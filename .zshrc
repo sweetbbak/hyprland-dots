@@ -16,16 +16,13 @@ export DOTBARE_DIR="$HOME/.dotfiles"
 export DOTBARE_TREE="$HOME"
 export DOTBARE_PREVIEW="bat -n {}"
 export DOTBARE_BACKUP="/home/hdd/dots-backup"
-# PATH=$PATH$( find $HOME/bin/ -type d -printf ":%p" )
-# PATH=$PATH$( fd . $HOME/bin/ -t d -d 1 -X printf " %s" {} )
-# path+=$( fd . $HOME/bin/ -t d -d 1 -X printf " %s" {} )
-# PATH=$PATH$( find $HOME/scripts/ -type d -printf ":%p" ):$PATH
-# export PATH=$HOME/.config/rofi/scripts:$PATH
+
+alias piper="/home/sweet/Documents/piper/piper --model ~/Documents/tts-rhaspy/en-us-amy-low.onnx --output_raw | aplay -r 16000 -c 1 -f S16_LE -t raw"
 
 # export BAT_THEME="Catppuccin-mocha"
-# LESS_TERMCAP_md=$'\E[01;31m' LESS_TERMCAP_me=$'\E[0m' GROFF_NO_SGR=1
-# LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_so=$'\E[01;32m'
-# LESS_TERMCAP_us=$'\E[04;33m' LESS_TERMCAP_ue=$'\E[0m'
+LESS_TERMCAP_md=$'\E[01;31m' LESS_TERMCAP_me=$'\E[0m' GROFF_NO_SGR=1
+LESS_TERMCAP_se=$'\E[0m' LESS_TERMCAP_so=$'\E[01;32m'
+LESS_TERMCAP_us=$'\E[04;33m' LESS_TERMCAP_ue=$'\E[0m'
 
 # --- Pywal ---
 # shellcheck source=/dev/null
@@ -34,7 +31,7 @@ export DOTBARE_BACKUP="/home/hdd/dots-backup"
 # --- Fzf-nvim-switcher --- 
 # uses neovim nightly 9+
 alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
-alias nvim-kick="NVIM_APPNAME=MyNvim nvim"
+alias nvim1="NVIM_APPNAME=nvim-ide nvim"
 # alias nvim-chad="NVIM_APPNAME=nvim-ditsuke nvim"
 # alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
 
@@ -57,20 +54,22 @@ bindkey -s ^a "nvims\n"
 source "$HOME/github/fzf-tab/fzf-tab.plugin.zsh"
 
 # shellcheck source=/dev/null
-source "$HOME/.config/zsh/fzf-history/zsh-fzf-history-search.zsh"
+source "$HOME/.config/zsh/plugins/fzf-history/zsh-fzf-history-search.zsh"
 zstyle ':autocomplete:*' default-context history-incremental-search-backward
 
 # fzf history
 # source ~/github/zsh-autocomp/zsh-autocomplete.plugin.zsh
 
 # Starship
+# export STARSHIP_CONFIG=~/.config/starship/starship.toml
 export STARSHIP_CONFIG=~/.config/starship.toml
 eval "$(starship init zsh)"
 
 # --- Keys ---
-bindkey '^[[1;5C' forward-word                    # ctrl + ->
-bindkey '^[[1;5D' backward-word                   # ctrl + <-
-bindkey ' ' magic-space
+bindkey '^[[1;5C' forward-word     # ctrl + ->
+bindkey '^[[1;5D' backward-word    # ctrl + <-
+bindkey '^H' backward-kill-word    # ctrl+backspace delete word
+# bindkey ' ' magic-space
 
 # enable completion features
 autoload -Uz compinit
@@ -136,6 +135,9 @@ bindkey '^[[Z' undo                               # shift + tab undo last action
 # configure `time` format
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
+# Zoxide
+eval "$(zoxide init zsh)"
+
 # --- ani-cli ---
 # export ANI_CLI_EXTERNAL_MENU=0
 
@@ -163,9 +165,9 @@ source "$HOME/.config/zsh/functions.zsh"
 # shellcheck source=/dev/null
 source "$HOME/.config/zsh/fzf.zsh"
 # shellcheck source=/dev/null
-source "$HOME/.config/zsh/xport.zsh"
+# source "$HOME/.config/zsh/plugins/xport.zsh"
 # shellcheck source=/dev/null
-# source ~/.config/zsh/colored-man.zsh
+# source ~/.config/zsh/plugins/colored-man.zsh
 # shellcheck source=/dev/null
 source "$HOME/.config/zsh/zplugs/dirhistory/dirhistory.plugin.zsh"
 
@@ -179,6 +181,7 @@ source "$HOME/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 # ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(forward-char)
 
 # shellcheck source=/dev/null
+# source "$HOME/.config/zsh/plugins/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 source "$HOME/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 #=#############################################

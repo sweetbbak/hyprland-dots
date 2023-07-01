@@ -44,12 +44,15 @@ format = ' [$symbol$environment](dimmed green) '
 
 # Prompt symbols 
 [character]
-success_symbol = "[](#8EC07C bold)"
-error_symbol = "[](#AD685A)"
+# success_symbol = "[](#8EC07C bold)"
+success_symbol = "[](#008787 bold)"
+# error_symbol = "[](#AD685A)"
+error_symbol = "[](#F783D0)"
 vicmd_symbol = "[](#DD8F6E)"
 
 [directory]
-format = "[]($style)[ ](bg:#312C2E fg:#DD8F6E)[$path](bg:#312C2E fg:#83A598 bold)[ ]($style)"
+# format = "[]($style)[ ](bg:#312C2E fg:#DD8F6E)[$path](bg:#312C2E fg:#83A598 bold)[ ]($style)"
+format = "[]($style)[ ](bg:#312C2E fg:#875FFF)[$path](bg:#312C2E fg:#F783D0 bold)[ ]($style)"
 style = "bg:none fg:#312C2E"
 truncation_length = 3
 truncate_to_repo=false
@@ -77,6 +80,7 @@ deleted = "${count}"
 [cmd_duration]
 min_time = 1
 # duration & style 
-format = "[]($style)[[神](bg:#312C2E fg:#eba0ac bold)$duration](bg:#312C2E fg:#BBC3DF)[ ]($style)"
+# format = "[]($style)[[神](bg:#312C2E fg:#eba0ac bold)$duration](bg:#312C2E fg:#BBC3DF)[ ]($style)"
+format = "[]($style)[[神](bg:#312C2E fg:#F783D0 bold)$duration](bg:#312C2E fg:#BBC3DF)[ ]($style)"
 disabled = false
 style = "bg:none fg:#312C2E"
