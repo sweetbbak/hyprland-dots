@@ -43,6 +43,7 @@ window#waybar {
 #idle_inhibitor,
 #custom-expand,
 #custom-media,
+#custom-menu,
 #mpd {
   padding: 0 15px;
   border-radius: 55px;

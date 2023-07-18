@@ -15,9 +15,17 @@ path=(
 # language bins
 path=(~/.luarocks/bin ~/node_modules/.bin $path)
 # script dirs
-path=(~/scripts ~/scripts/fzf-bin ~/src ~/dev ~/dev/bin $path)
+path=(
+  ~/scripts
+  ~/scripts/justchokingaround
+  ~/scripts/fzf-bin
+  ~/src
+  ~/dev
+  ~/dev/bin
+  $path
+)
 # appimages and apps
-path=(~/apps ~/apps/blender340/blender.desktop $path) 
+path=(~/apps $path) 
 
 path+=(~/bin/**/*(N/))
 # get dirs at 1 depth in bin

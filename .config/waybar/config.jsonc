@@ -1,7 +1,7 @@
 {
   "layer": "top", // Waybar at top layer
   "position": "top", // Waybar position (top|bottom|left|right)
-  "height": 40, // Waybar height (to be removed for auto height)
+  "height": 10, // Waybar height (to be removed for auto height)
   // "width": 1280, // Waybar width
   "spacing": 4, // Gaps between modules (4px)
   // Choose the order of the modules
@@ -13,6 +13,7 @@
   "modules-center": ["custom/media"],
   "modules-right": [
     "custom/wall",
+    "custom/menu",
     "pulseaudio",
     // "mpd",
     "memory",
@@ -31,16 +32,16 @@
   "custom/wall": {
     "exec": "~/.config/hypr/scripts/swww-paper.sh",
     "return-type": "json",
-    "restart-interval": 1,
+    // "restart-interval": 1,
     "on-click": "~/.config/hypr/scripts/swww-paper.sh random",
     "on-click-middle": "~/.config/hypr/scripts/swww-paper.sh pick",
     "on-click-right": "~/.config/hypr/scripts/swww-paper.sh gif"
   },
 
   "custom/menu": {
-    "format": "!",
+    "format": "",
     "tooltip": false,
-    "on-click": "rofi -show run"
+    "on-click": "wofi --show drun -I"
   },
   //////////////////////////////////
   "wlr/workspaces": {
@@ -148,8 +149,10 @@
     "format": "{icon} {}",
     "return-type": "json",
     "max-length": 40,
-    "on-click": "playerctl -p spotify_player play-pause",
-    "on-click-right": "playerctl -p spotify_player next",
+    // "on-click": "playerctl -p spotify_player play-pause",
+    // "on-click-right": "playerctl -p spotify_player next",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
     "format-icons": {
       "spotify": " ",
       "default": " "

@@ -1,5 +1,6 @@
 return {
 
+  { "elkowar/yuck.vim" },
   {
     "mthbernardes/codeexplain.nvim",
     lazy = true,
@@ -97,47 +98,45 @@ return {
     },
   },
 },
--- highlighting - set to markdown headings
-{
-  "folke/paint.nvim",
-  config = function()
-    local hlmap = {
-      ["^#%s+(.-)%s*$"] = "Operator",
-      ["^##%s+(.-)%s*$"] = "Type",
-      ["^###%s+(.-)%s*$"] = "String",
-      ["^####%s+(.-)%s*$"] = "Constant",
-      ["^#####%s+(.-)%s*$"] = "Number",
-      ["^######%s+(.-)%s*$"] = "Error",
-    }
-
-    local highlights = {}
-    for pattern, hl in pairs(hlmap) do
-      table.insert(highlights, {
-        filter = { filetype = "markdown" },
-        pattern = pattern,
-        hl = hl,
-      })
-    end
-
-    require("paint").setup({
-      ---@type PaintHighlight[]
-      highlights = highlights,
-    })
-  end,
-},
-{
-  "kylechui/nvim-surround",
-  version = "*", -- Use for stability; omit to use `main` branch for the latest features
-  event = "VeryLazy",
-  config = function()
-    require("nvim-surround").setup({
-      -- Configuration here, or leave empty to use defaults
-    })
-  end,
-},
 {
   "nvim-treesitter/nvim-treesitter-textobjects",
   after = "nvim-treesitter",
   requires = "nvim-treesitter/nvim-treesitter",
 },
-{ "nvim-telescope/telescope-media-files.nvim" }
+-- annoying ass fucking auto format sucks
+{ "nvim-telescope/telescope-media-files.nvim" },
+{
+  "lewis6991/hover.nvim",
+  config = function()
+    require("hover").setup({
+      init = function()
+        -- Require providers
+        require("hover.providers.lsp")
+        require("hover.providers.gh")
+        require("hover.providers.gh_user")
+        require("hover.providers.jira")
+        require("hover.providers.man")
+        require("hover.providers.dictionary")
+      end,
+      preview_opts = {
+        border = nil,
+      },
+      -- Whether the contents of a currently open hover window should be moved
+      -- to a :h preview-window when pressing the hover keymap.
+      preview_window = false,
+      title = true,
+    })
+
+    -- Setup keymaps
+    vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
+    vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
+  end,
+},
+{
+  "edluffy/hologram.nvim",
+  config = function()
+    require("hologram").setup({
+      auto_display = true,
+    })
+  end,
+}
