@@ -18,7 +18,8 @@ export DOTBARE_PREVIEW="bat -n {}"
 export DOTBARE_BACKUP="/home/sweet/hdd/dots-backup"
 
 # alias tts="/home/sweet/Documents/piper/piper --model ~/ssd/model_1/model.onnx --output_raw | aplay -r 22050 -c 1 -f S16_LE -t raw"
-alias tts="piper-tts --model ~/ssd/model_1/model.onnx --output_raw | aplay -r 22050 -c 1 -f S16_LE -t raw"
+alias tts1="piper-tts --model ~/ssd/model_1/model.onnx --output_raw | aplay -r 22050 -c 1 -f S16_LE -t raw"
+alias tts="piper-tts --model ~/ssd/amy/amy.onnx --output_raw | aplay -r 22050 -c 1 -f S16_LE -t raw"
 
 # export BAT_THEME="Catppuccin-mocha"
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-wallfile=/tmp/wallpaper-33
+# wallfile=/tmp/wallpaper-33
+wallfile=/.cache/wallpaper-33
 
 picdir="$HOME/Pictures/backgrounds"
 

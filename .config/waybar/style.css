@@ -1,3 +1,5 @@
+/* changing color from #ffffff to #F5BDE6 lol */
+
 * {
   font-family: "Maple Mono NF";
   font-size: 14px;
@@ -5,6 +7,8 @@
 
 window#waybar {
   background-color: transparent;
+  /* background-color: rgba(162, 128, 167, 0.5); */
+  /* filter: blur(50px); */
 }
 
 #workspaces {
@@ -22,11 +26,12 @@ window#waybar {
   padding-right: 15px;
   padding-left: 15px;
   font-weight: bolder;
-  color: #ffffff;
+  color: #f5bde6;
 }
 
 #workspaces button.active {
-  color: #ee5396;
+  /* color: #ee5396; */
+  color: #ffffff;
 }
 
 #clock,
@@ -48,7 +53,7 @@ window#waybar {
   padding: 0 15px;
   border-radius: 55px;
   background-color: #161616;
-  color: #ffffff;
+  color: #f5bde6;
   box-shadow: rgba(0, 0, 0, 0.116) 2 2 5 2px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -60,7 +65,7 @@ window#waybar {
   padding: 0 20px;
   border-radius: 55px;
   background-color: #161616;
-  color: #ffffff;
+  color: #f5bde6;
   box-shadow: rgba(0, 0, 0, 0.116) 2 2 5 2px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -71,7 +76,7 @@ window#waybar {
   padding: 0 20px;
   border-radius: 55px;
   background-color: #161616;
-  color: #ffffff;
+  color: #f5bde6;
   box-shadow: rgba(0, 0, 0, 0.116) 2 2 5 2px;
   margin-top: 10px;
   margin-bottom: 10px;
