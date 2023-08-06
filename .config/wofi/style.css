@@ -6,11 +6,19 @@
 @define-color bg2 #1e1e1e;
 */
 
-@define-color accent #F5BDE6;
+@import "/home/sweet/.cache/okolors/waybar.css";
+/*
+@define-color accent #f5bde6;
 @define-color txt #F5BDE6;
 @define-color bg #161616;
 @define-color bg2 #1e1e1e;
 
+@define-color accent @color2;
+@define-color txt @color2;
+@define-color bg @color3;
+@define-color bg2 @base;
+
+*/
 * {
   font-family: "Maple Mono NF", monospace;
   font-size: 14px;
@@ -20,9 +28,9 @@
 window {
   margin: 0px;
   padding: 10px;
-  border: 3px solid @accent;
+  border: 3px solid @color2;
   border-radius: 7px;
-  background-color: @bg;
+  background-color: @mantle;
   animation: slideIn 0.5s ease-in-out both;
 }
 
@@ -42,7 +50,7 @@ window {
   margin: 5px;
   padding: 10px;
   border: none;
-  background-color: @bg;
+  background-color: @mantle;
   animation: fadeIn 0.5s ease-in-out both;
 }
 
@@ -62,7 +70,7 @@ window {
   margin: 5px;
   padding: 10px;
   border: none;
-  background-color: @bg;
+  background-color: @mantle;
 }
 
 /* Scroll */
@@ -77,8 +85,8 @@ window {
   margin: 5px;
   padding: 10px;
   border: none;
-  color: @accent;
-  background-color: @bg2;
+  color: @color2;
+  background-color: @base;
   animation: fadeIn 0.5s ease-in-out both;
 }
 
@@ -87,15 +95,15 @@ window {
   margin: 5px;
   padding: 10px;
   border: none;
-  color: @txt;
+  color: @color7;
   animation: fadeIn 0.5s ease-in-out both;
 }
 
 /* Selected Entry */
 #entry:selected {
-  background-color: @accent;
+  background-color: @mantle;
 }
 
 #entry:selected #text {
-  color: @bg;
+  color: @color2;
 }

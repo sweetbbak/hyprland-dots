@@ -50,7 +50,8 @@ function nvims() {
 
 # --- fzf tab ---
 # shellcheck source=/dev/null
-source "$HOME/github/fzf-tab/fzf-tab.plugin.zsh"
+# source "$HOME/github/fzf-tab/fzf-tab.plugin.zsh"
+source "$HOME/.config/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh"
 
 # shellcheck source=/dev/null
 source "$HOME/.config/zsh/plugins/fzf-history/zsh-fzf-history-search.zsh"
@@ -58,7 +59,7 @@ zstyle ':autocomplete:*' default-context history-incremental-search-backward
 
 # Starship
 # export STARSHIP_CONFIG=~/.config/starship/starship.toml
-export STARSHIP_CONFIG=~/.config/starship.toml
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init zsh)"
 
 # --- Keys ---

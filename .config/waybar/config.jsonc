@@ -1,49 +1,43 @@
 {
-  "layer": "top", // Waybar at top layer
-  "position": "top", // Waybar position (top|bottom|left|right)
-  "height": 10, // Waybar height (to be removed for auto height)
-  // "width": 1280, // Waybar width
-  "spacing": 4, // Gaps between modules (4px)
-  // Choose the order of the modules
-  // "margin-left":25,
-  // "margin-right":25,
-  "margin-bottom": -5,
-  // "margin-top": 10,
-  "modules-left": ["wlr/workspaces"],
-  "modules-center": ["custom/media"],
-  "modules-right": [
-    "custom/wall",
-    "custom/menu",
-    "pulseaudio",
-    // "mpd",
-    "memory",
-    "clock",
-    "tray"
+  "layer": "top",
+  "position": "top",
+  "mod": "overlay",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "height": 20,
+  "modules-left": [
+    "custom/launch_wofi",
+    "custom/power_btn",
+    "custom/lock_screen",
+    "wlr/workspaces",
+    "wlr/taskbar"
   ],
-  // Modules configuration
-  // custom modules ////////////////
-  "custom/dunst": {
-    "exec": "~/.config/waybar/scripts/dunst.sh",
-    "return-type": "json",
-    "restart-interval": 1,
-    "on-click": "dunstctl set-paused toggle"
+  "modules-right": [
+    "cava",
+    "tray",
+    "cpu",
+    "memory",
+    "disk",
+    "pulseaudio",
+    "pulseaudio#microphone",
+    "clock"
+  ],
+  "custom/launch_wofi": {
+    "format": "  ",
+    "on-click": "pkill wofi || wofi --show drun -I -c ~/.config/wofi/style.css",
+    "tooltip": false
   },
-  // wallpaper
-  "custom/wall": {
-    "exec": "~/.config/hypr/scripts/swww-paper.sh",
-    "return-type": "json",
-    // "restart-interval": 1,
-    "on-click": "~/.config/hypr/scripts/swww-paper.sh random",
-    "on-click-middle": "~/.config/hypr/scripts/swww-paper.sh pick",
-    "on-click-right": "~/.config/hypr/scripts/swww-paper.sh gif"
+  "custom/power_btn": {
+    "format": "",
+    "on-click": "sh -c '(sleep 0.5s; wlogout --protocol layer-shell)' & disown",
+    "tooltip": false
   },
-
-  "custom/menu": {
-    "format": "",
-    "tooltip": false,
-    "on-click": "wofi --show drun -I"
+  "custom/lock_screen": {
+    "format": "",
+    "on-click": "sh -c '(sleep 0.5s; swaylock)' & disown",
+    "tooltip": false
   },
-  //////////////////////////////////
   "wlr/workspaces": {
     "format": "{icon}",
     "format-icons": {
@@ -66,71 +60,61 @@
       "3": []
     }
   },
-  "mpd": {
-    "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-    "format-disconnected": "Disconnected ",
-    "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-    "unknown-tag": "N/A",
-    "interval": 2,
-    "consume-icons": {
-      "on": " "
-    },
-    "random-icons": {
-      "off": "<span color=\"#f53c3c\"></span> ",
-      "on": " "
-    },
-    "repeat-icons": {
-      "on": " "
-    },
-    "single-icons": {
-      "on": "1 "
-    },
-    "state-icons": {
-      "paused": "",
-      "playing": ""
-    },
-    "tooltip-format": "MPD (connected)",
-    "tooltip-format-disconnected": "MPD (disconnected)"
+
+  // "wlr/workspaces": {
+  //   "disable-scroll": false,
+  //   "all-outputs": true,
+  //   "on-click": "activate",
+  //   "format": "{name}",
+  //   "persistent_workspaces": {
+  //     "1": [],
+  //     "2": [],
+  //     "3": [],
+  //     "4": [],
+  //     "5": []
+  //   },
+  //   "sort-by-number": true
+  // },
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 16,
+    "all-outputs": true,
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "ignore-list": ["wofi", "kitty"]
   },
-  "tray": {
-    "spacing": 10
-  },
-  "clock": {
-    "format": "{:%a, %b %d - %I:%M}",
-    "tooltip-format": "{calendar}",
-    "interval": 30
+  "cpu": {
+    "interval": 10,
+    "format": "",
+    "max-length": 10,
+    "format-alt-click": "click-right",
+    "format-alt": " {usage}%",
+    "on-click": "kitty --start-as=fullscreen --title btop sh -c 'btop'"
   },
   "memory": {
     "interval": 30,
-    "format": "{used:0.1f}/{total:0.1f}G"
+    "format": "",
+    "format-alt-click": "click-right",
+    "format-alt": " {}%",
+    "max-length": 10,
+    "tooltip": true,
+    "tooltip-format": "Memory - {used:0.1f}GB used",
+    "on-click": "kitty --start-as=fullscreen --title btop sh -c 'btop'"
   },
-  "backlight": {
-    "device": "amdgpu_bl1",
-    "format": "{percent}% {icon}",
-    "format-icons": ["", "", "", "", "", "", "", "", ""]
-  },
-  "battery": {
-    "format": "<span font='Liga SFMono Nerd Font'>{icon}</span>  {capacity}% - {time}",
-    "format-icons": ["", "", "", "", ""],
-    "format-time": "{H}h{M}m",
-    "format-charging": "<span font='Liga SFMono Nerd Font'></span>  <span font='Liga SFMono Nerd Font'>{icon}</span>  {capacity}% - {time}",
-    "format-full": "<span font='Liga SFMono Nerd Font'></span>  <span font='Liga SFMono Nerd Font'>{icon}</span>  Charged",
+  "disk": {
     "interval": 30,
-    "states": {
-      "warning": 25,
-      "critical": 10
-    },
-    "tooltip": false
-  },
-  "network": {
-    "format-wifi": "{essid} ",
-    "tooltip-format": "via {gwaddr} {ifname}",
-    "format-disconnected": "wifi",
-    "on-click": "wofi-wifi-menu"
+    "format": "󰋊",
+    "path": "/",
+    "format-alt-click": "click-right",
+    "format-alt": "󰋊 {percentage_used}%",
+    "tooltip": true,
+    "tooltip-format": "HDD - {used} used out of {total} on {path} ({percentage_used}%)",
+    "on-click": "kitty --start-as=fullscreen --title btop sh -c 'btop'"
   },
   "pulseaudio": {
     "scroll-step": 5, // %, can be a float
-    "format": "{icon} {volume}%",
+    "format": "{icon} {volume}% ",
     "format-bluetooth": "{volume}% {icon} {format_source}",
     "format-bluetooth-muted": " {icon} {format_source}",
     "format-muted": " {format_source}",
@@ -145,19 +129,67 @@
     },
     "on-click": "pavucontrol"
   },
-  "custom/media": {
-    "format": "{icon} {}",
-    "return-type": "json",
-    "max-length": 40,
-    // "on-click": "playerctl -p spotify_player play-pause",
-    // "on-click-right": "playerctl -p spotify_player next",
-    "on-click": "playerctl play-pause",
-    "on-click-right": "playerctl next",
-    "format-icons": {
-      "spotify": " ",
-      "default": " "
-    },
-    "escape": true,
-    "exec": "python $HOME/.config/waybar/custom_modules/mediaplayer.py 2> /dev/null" // Script in resources folder
+
+  // "pulseaudio": {
+  //   "format": "{icon}",
+  //   "format-muted": "",
+  //   "on-click": "~/.config/HyprV/waybar/scripts/volume --toggle",
+  //   "on-click-right": "pavucontrol",
+  //   "on-scroll-up": "~/.config/HyprV/waybar/scripts/volume --inc",
+  //   "on-scroll-down": "~/.config/HyprV/waybar/scripts/volume --dec",
+  //   "scroll-step": 5,
+  //   "format-icons": {
+  //     "headphone": "",
+  //     "hands-free": "",
+  //     "headset": "",
+  //     "phone": "",
+  //     "portable": "",
+  //     "car": "",
+  //     "default": ["", "", ""]
+  //   },
+  //   "tooltip": true,
+  //   "tooltip-format": "{icon} at {volume}%"
+  // },
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": "  ",
+    "format-source-muted": "",
+    // "on-click": "~/.config/HyprV/waybar/scripts/volume --toggle-mic",
+    // "on-click-right": "pavucontrol",
+    // "on-scroll-up": "~/.config/HyprV/waybar/scripts/volume --mic-inc",
+    // "on-scroll-down": "~/.config/HyprV/waybar/scripts/volume --mic-dec",
+    "scroll-step": 5,
+    "tooltip": true,
+    "tooltip-format": " at {volume}%"
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10
+  },
+  "clock": {
+    "interval": 5,
+    "format": "{:%a, %b %d - %I:%M}",
+    "tooltip": true,
+    "tooltip-format": "{:%d/%m/%Y}"
+  },
+  "cava": {
+    "framerate": 30,
+    "autosens": 0,
+    "sensitivity": 70,
+    "bars": 18,
+    "method": "pipewire",
+    "source": "auto",
+    "stereo": true,
+    "reverse": false,
+    "bar_delimiter": 0,
+    "monstercat": false,
+    "waves": false,
+    "noise_reduction": 0.3,
+    "input_delay": 2,
+    "sleep_timer": 15,
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+    // "actions": {
+    //   "on-click-right": "mode"
+    // }
   }
 }

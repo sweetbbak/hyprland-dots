@@ -1,5 +1,13 @@
 return {
-
+  {
+    "glacambre/firenvim",
+    -- if firenvim -> vim.g.started_by_firenvim == true -> lazy must be false.
+    lazy = not vim.g.started_by_firenvim == true,
+    build = function()
+      require("lazy").load({ plugins = { "firenvim" }, wait = true })
+      vim.fn["firenvim#install"](0)
+    end,
+  },
   { "elkowar/yuck.vim" },
   {
     "mthbernardes/codeexplain.nvim",
