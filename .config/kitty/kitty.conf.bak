@@ -88,6 +88,7 @@ map f1 launch --stdin-source=@screen_scrollback --stdin-add-formatting less +G -
 
 
 # BEGIN_KITTY_THEME
-# kanagawabones
-include current-theme.conf
+# Kaolin Temple
+# include current-theme.conf
+include ~/.cache/okolors/okitty.conf
 # END_KITTY_THEME
