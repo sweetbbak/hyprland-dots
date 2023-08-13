@@ -17,36 +17,13 @@ export DOTBARE_TREE="$HOME"
 export DOTBARE_PREVIEW="bat -n {}"
 export DOTBARE_BACKUP="/home/sweet/hdd/dots-backup"
 
-# alias tts="/home/sweet/Documents/piper/piper --model ~/ssd/model_1/model.onnx --output_raw | aplay -r 22050 -c 1 -f S16_LE -t raw"
 alias tts1="piper-tts --model ~/ssd/model_1/model.onnx --output_raw | aplay -r 22050 -c 1 -f S16_LE -t raw"
 alias tts="piper-tts --model ~/ssd/amy/amy.onnx --output_raw | aplay -r 22050 -c 1 -f S16_LE -t raw"
 
-# export BAT_THEME="Catppuccin-mocha"
-
 # --- Pywal ---
 # shellcheck source=/dev/null
-source "$HOME/.cache/wal/colors.sh"
-
-# --- Fzf-nvim-switcher --- 
-# uses neovim nightly 9+
-alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
-alias nvim1="NVIM_APPNAME=nvim-ide nvim"
-# alias nvim-chad="NVIM_APPNAME=nvim-ditsuke nvim"
-# alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
-
-function nvims() {
-  items=("default" "MyNvim" "LazyVim" "nvim-ide" "AstroNvim")
-  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
-  if [[ -z $config ]]; then
-    echo "Nothing selected"
-    return 0
-  elif [[ $config == "default" ]]; then
-    config=""
-  fi
-  NVIM_APPNAME=$config nvim "$@"
-}
-
-# bindkey -s ^a "nvims\n"
+test -f "$HOME/.cache/okolors/colors.sh" && source "$HOME/.cache/okolors/colors.sh"
+# source "$HOME/.cache/wal/colors.sh"
 
 # --- fzf tab ---
 # shellcheck source=/dev/null
@@ -57,10 +34,16 @@ source "$HOME/.config/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh"
 source "$HOME/.config/zsh/plugins/fzf-history/zsh-fzf-history-search.zsh"
 zstyle ':autocomplete:*' default-context history-incremental-search-backward
 
+# shellcheck source=/dev/null
+source ~/.config/zsh/plugins/fzf-tab-source/*.zsh
+
 # Starship
-# export STARSHIP_CONFIG=~/.config/starship/starship.toml
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
-eval "$(starship init zsh)"
+if command -v starship >/dev/null; then
+  eval "$(starship init zsh)"
+else
+  echo -e "\e[33;3mStarship is not installed\e[0m"
+fi
 
 # --- Keys ---
 bindkey '^[[1;5C' forward-word     # ctrl + ->
@@ -89,13 +72,11 @@ zstyle ':completion:*:descriptions' format '[%d]'
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # preview directory's content with exa when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview "exa -1 --color=always $realpath"
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview "exa -1 --color=always $realpath"
+# zstyle ':fzf-tab:complete:ls:*' fzf-preview "cat -p {}"
 # switch group using `,` and `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
 
-## tab sources
-# shellcheck source=/dev/null
-source ~/.config/zsh/plugins/fzf-tab-source/*.zsh
 
 # History configurations
 setopt autocd
@@ -131,13 +112,9 @@ bindkey '^[[F' end-of-line                        # end
 bindkey '^[[Z' undo                               # shift + tab undo last action
 
 # Zoxide
-eval "$(zoxide init zsh)"
-
-# shellcheck source=/dev/null
-# source "$HOME/.config/zsh/plugins/fzf-help/src/fzf-help.zsh"
-# zle -N fzf-help-widget
-# bindkey -M vicmd "^A" fzf-help-widget
-# bindkey -M viins "^A" fzf-help-widget
+if command -v zoxide >/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
 
 # --- Sources ---
 # source aliases and personal scripts
@@ -152,7 +129,7 @@ source "$HOME/.config/zsh/fzf.zsh"
 # shellcheck source=/dev/null
 source "$HOME/.config/zsh/zplugs/dirhistory/dirhistory.plugin.zsh"
 
-# source auto suggestions and syntax highlighting (syntax needs to be last)
+# source auto suggestions
 # shellcheck source=/dev/null
 source "$HOME/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
@@ -163,5 +140,5 @@ source "$HOME/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 # ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(forward-char)
 
 # shellcheck source=/dev/null
-# source "$HOME/.config/zsh/plugins/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# must be loaded last
 source "$HOME/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
