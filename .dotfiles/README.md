@@ -1,9 +1,10 @@
 ## Dotfiles
 
 <p align="center">
-  <img src="assets/2023-08-12 17-32-41.mp4"/>
+  <video src="assets/2023-08-12 17-32-41.mp4"/>
 </p>
 
+<img src="assets/pink.png"/>
 <details>
 <summary>🌻 </summary>
 <img src="assets/pink.png"/>
@@ -12,6 +13,7 @@
 <summary>🌿 </summary>
 <img src="assets/purple.png"/>
 </details>
+<details>
 <summary>🔒 </summary>
 <img src="assets/lockscreen.png"/>
 </details>
