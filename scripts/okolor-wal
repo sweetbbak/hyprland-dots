@@ -1,0 +1,144 @@
+#!/bin/bash
+# set -x
+colorfile="$HOME/.cache/okolors/colors"
+colordir="$HOME/.cache/okolors"
+
+[ ! -d "$colordir" ] && mkdir -p "${colordir}"
+
+generate_kitty() {
+    cat <<EOF > "${colordir}/okitty.conf"
+background #1E1E1E
+foreground #E0DFE0
+cursor #bbbbbb
+selection_background #453a39
+color0 #1E1E1E
+color8 #$Color8
+color1 #$Color1
+color9 #$Color1
+color2 #$Color2
+color10 #$Color2
+color3 #$Color3
+color11 #$Color3
+color4 #$Color4
+color12 #$Color4
+color5 #$Color5
+color13 #$Color5
+color6 #$Color6
+color14 #$Color6
+color7 #$Color7
+color15 #$Color7
+selection_foreground #121212
+EOF
+}
+
+generate_hypr() {
+    # source this file from Hypr config
+    cat <<EOF > "${colordir}/hypr-okolors.conf"
+general {
+    col.active_border = rgb($Color2)
+    col.inactive_border = rgb($Color8)
+}
+EOF
+}
+
+generate_css() {
+    cat <<EOF > "${colordir}/waybar.css"
+/*
+*
+* Okolor color generator
+* Maintainer: sweetbbak
+*
+*/
+
+@define-color base   #1e1e1e;
+@define-color mantle #161616;
+@define-color crust  #11111b;
+
+@define-color text     #cdd6f4;
+@define-color subtext0 #a6adc8;
+@define-color subtext1 #bac2de;
+
+@define-color surface0 #313244;
+@define-color surface1 #45475a;
+@define-color surface2 #585b70;
+
+@define-color overlay0 #6c7086;
+@define-color overlay1 #7f849c;
+@define-color overlay2 #9399b2;
+
+@define-color color1      #$Color1;
+@define-color color2      #$Color2;
+@define-color color3      #$Color3;
+@define-color color4      #$Color4;
+@define-color color5      #$Color5;
+@define-color color6      #$Color6;
+@define-color color7      #$Color7;
+@define-color color8      #$Color8;
+
+EOF
+}
+
+generate_lutgen_wallpaper() {
+    if ! command -v lutgen >/dev/null; then
+            echo "Lutgen not found"
+        else 
+            # lutgen -o "${colordir}/output.png"
+            lutgen -o "${colordir}/output.png" apply "${1}" -- "$Color2" "$Color3" "$Color4" "$Color5" "$Color6" "$Color7"
+            kitty +kitten icat "${colordir}/output.png" && echo "${colordir}/output.png"
+    fi
+}
+
+generate_color() {
+    # generate a color master file
+    # multi_swatch=(-w 0 -l "10,30,50,70" -n 3 -e 0.01)
+    okolors -o swatch "${1}"
+    read -r Color1 Color2 Color3 Color4 Color5 Color6 Color7 Color8 < <(okolors "$1")
+    printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n" \
+        "$Color1" "$Color2" "$Color3" \
+        "$Color4" "$Color5" "$Color6" \
+        "$Color7" "$Color8" > "${colorfile}"
+
+    printf "export Color1=%s\nexport Color2=%s\nexport Color3=%s\nexport Color4=%s\nexport Color5=%s\nexport Color6=%s\nexport Color7=%s\nexport Color8=%s\n" \
+        "$Color1" "$Color2" "$Color3" \
+        "$Color4" "$Color5" "$Color6" \
+        "$Color7" "$Color8" > "${colorfile}.sh"
+}
+
+reload_all() {
+    hyprctl reload
+    hyprctl dispatch exec "pkill waybar ; waybar -c $HOME/.config/waybar/config.jsonc -s $HOME/.config/waybar/style.css"
+    notify-send "Theme changed, restart Kitty"
+    [ "$change_wall" = 1 ] && swww img "${image}"
+}
+
+gen() {
+    [ -n "${image}" ] && [ -f "${image}" ] && generate_color "${image}"
+    generate_hypr
+    generate_css
+    generate_kitty
+    generate_lutgen_wallpaper "${image}"
+    tts_moe "changing theme and wallpaper too ${image##*/}"
+    reload_all
+}
+
+tts_moe() {
+    if ! command -v moe.amy.tts >/dev/null; then
+        return
+    else
+        moe.amy.tts -t "$@"
+    fi
+}
+
+change_wall=0
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -c) shift && tts_moe "Choose an image" && image=$(swayimg "${1:-$HOME/ssd/gallery-dl}") ; change_wall=1 ;;
+        -i) shift && image="${1}" ;;
+        -w) change_wall=1 ;;
+    esac
+    shift
+done
+
+tts_moe "generating a color scheme" 2>/dev/null
+gen
