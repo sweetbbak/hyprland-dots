@@ -1,14 +1,12 @@
 export EDITOR='helix'
 export SHELL=/bin/bash
-
 export HISTFILE=~/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
 export HISTDUP=erase
-
 export VISUAL='kitty helix'
-# export MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat --color=always -p -l man'"
 export MANPAGER="bat -p -l help"
+# export MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat --color=always -p -l man'"
 # export PAGER='bat --color=always'
 # export MANPAGER='bat --color=always --plain'
 export DIFFPROG="nvim -d"
